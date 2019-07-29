@@ -1,0 +1,1064 @@
+\documentclass{beamer}
+
+% Setup appearance:
+\usefonttheme{structurebold}
+
+\usetheme{Darmstadt}
+\setbeamerfont*{frametitle}{size=\normalsize,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage[brazilian]{babel}
+
+% additional packages
+\usepackage{hyperref}
+\usepackage{ifpdf}
+\usepackage{pgf,pgfarrows,pgfnodes,pgffor,pgfkeys} % to draw figures
+\usepackage{tikz}
+
+\colorlet{redshaded}{red!25!bg}
+\colorlet{shaded}{black!25!bg}
+\colorlet{shadedshaded}{black!10!bg}
+\colorlet{blackshaded}{black!40!bg}
+
+\colorlet{darkred}{red!80!black}
+\colorlet{darkblue}{blue!80!black}
+\colorlet{darkgreen}{green!80!black}
+
+%%%%%%%%%%%%%%%%%%%% IMAGES
+\def\imageheight{2cm}
+\def\imagewidth{2.25cm}
+\def\textimagewidth{4cm}
+
+%% photos
+\pgfdeclareimage[interpolate=true,width=\imagewidth]{knuth}{img/donknuth.png}
+\pgfdeclareimage[interpolate=true,width=\imagewidth]{lamport}{img/leslie.png}
+% codes
+\pgfdeclareimage[interpolate=true,height=\imageheight]{texpage}{img/textext.png}
+\pgfdeclareimage[interpolate=true,height=\imageheight]{dvicode}{img/dvicode.png}
+\pgfdeclareimage[interpolate=true,height=\imageheight]{pscode}{img/pscode.png}
+\pgfdeclareimage[interpolate=true,height=\imageheight]{pspage}{img/pspage.png}
+%% printers imgs
+\pgfdeclareimage[interpolate=true,height=\imageheight]{laserprinter}{img/laserprinter.png}
+\pgfdeclareimage[interpolate=true,height=\imageheight]{colorprinter}{img/colorlaserprinter.png}
+%% Letter
+\pgfdeclareimage[interpolate=true,height=3cm]{glyph}{img/gglyph.png}
+\pgfdeclareimage[interpolate=true,height=4cm]{gletter}{img/g.png}
+\pgfdeclareimage[interpolate=true,height=4cm]{hletter}{img/h.png}
+\pgfdeclareimage[interpolate=true,height=6.5cm]{parenthesis}{img/parenthesis.png}
+\pgfdeclareimage[interpolate=true,height=4cm]{gletterwhite}{img/gWhite.png}
+\pgfdeclareimage[interpolate=true,height=4cm]{hletterwhite}{img/hWhite.png}
+\pgfdeclareimage[interpolate=true,height=6.5cm]{parenthesiswhite}{img/parenthesisWhite.png}
+
+
+\title{\Large{\TeX: typesetting system \\ \LaTeX: document preparation system}}
+  
+\author{Adriano de Jesus Holanda}
+\institute[]{Departamento de F\'i­sica e Matem\'atica\\
+FFCLRP-USP}
+
+\date{2010-04-28}
+  
+\begin{document}
+% Definitions
+\def\imgheight{8} % default images height
+\def\imgwidth{6} % default images width
+\def\bs{$\backslash$}
+
+\frame{\titlepage}
+
+\part{Main Part}
+\frame{\frametitle{Outline}\tableofcontents[part=1]}
+
+\section{\TeX}
+
+\subsection{Introduction}
+
+\begin{frame}
+
+  \frametitle{\TeX\ -- {\large $\tau \epsilon \chi$}\ {\tiny (greek: ``art/craft'')}}
+  \framesubtitle{Typesetting system}
+
+  \begin{columns}
+    
+    \begin{column}{2.5cm}
+      \def\x{-.3cm}
+      \def\y{-1cm}
+        \pgfuseimage{knuth}
+    \end{column}
+    
+    \begin{column}{7.5cm}  
+
+      \begin{block}{Prof. Donald Erwin Knuth}
+        \begin{itemize}
+        \item Emeritus Professor of ``The Art of Computer Programming'' (TAOCP)
+        \item Stanford University, USA
+        \item Main contributor to the {\bf Analysis of Algorithms} field using asymptotic notation
+        
+        \end{itemize}
+      \end{block}
+  
+    \begin{alertblock}{Motivation}
+      \begin{itemize}
+      \item Unsatisfaction with printed version of TAOCP2 2nd ed.,
+        due to declined quality of the typesetting using new software
+        and digital printer technology.
+      \end{itemize}
+    \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{\TeX family}
+   \begin{list}
+      {\color{blue!90!bg}{$\star$}}{\setlength{\parsep}{.5cm}}
+    \item {\em Language} $\rightarrow$ \TeX~(Pascal);
+    \item {\em Font engine} $\rightarrow$ METAFONT;
+    \item {\em Font family} $\rightarrow$ Computer Modern;
+    \item {\em Output format} $\rightarrow$ Device independent format (DVI) [Fuchs, 1979].
+   \end{list}
+\end{frame}
+
+% measures used to draw rectangles simbolizing
+% pages of manuscripts
+\def\xptex{2.5} % x position of TeX page
+\def\xshift{3} % x position of DVI page
+
+\begin{frame}
+
+  \frametitle{Processing steps}
+  
+  \begin{tikzpicture}
+    
+    \begin{pgfpicture}{-0.5cm}{0cm}{4cm}{6cm}
+
+    \pgfputat{\pgfxy(0,2)}{\pgfbox[center, center]{\pgfuseimage{texpage}}}
+      \only<2-5,6-8> {
+        \pgfputat{\pgfxy(4.25, 2)}{\pgfbox[center, center]{\pgfuseimage{dvicode}}}
+      }
+      \only<3-4>{
+        \pgfputat{\pgfxy(8.5, 4.5)}{\pgfbox[center, center]{\pgfuseimage{laserprinter}}}
+      }
+      \only<7>{
+        \pgfputat{\pgfxy(8.5, -.5)}{\pgfbox[center, center]{\pgfuseimage{laserprinter}}}
+      }
+      \only<4,8>{
+        \pgfputat{\pgfxy(8.5, -.5)}{\pgfbox[center, center]{\pgfuseimage{colorprinter}}}
+      }
+      \only<5>{
+        \pgfputat{\pgfxy(8.5, 2)}{\pgfbox[center, center]{\pgfuseimage{pscode}}}
+      }
+      \only<6-8>{
+        \pgfputat{\pgfxy(8.5, 2)}{\pgfbox[center, center]{\pgfuseimage{pspage}}}
+      }
+      
+      %% ARROWS
+      \pgfsetendarrow{\pgfarrowto}
+      \only<2-5,6-8>{
+        \pgfxyline(1.35, 2.75)(3.25, 2.75)
+      }
+      \only<3-4>{
+        \pgfxyline(5.2, 2.75)(7.55, 5)
+        \pgftext[base,at={\pgfxy(7.25, 3.5), rotate=0}] {X converter}
+      }
+      \only<4>{
+        \pgfxyline(5.2, 2.75)(7.5, 1.1)
+        \pgftext[base,at={\pgfxy(7.15, 2), rotate=0}] {Y converter}
+      }
+      %% TEXT
+      \pgfputat{\pgfxy(.5, 3.25)}{\pgfbox[left,bottom]{\color{red!20!}TeX}}
+      \pgfputat{\pgfxy(-1.65, 4.25)}{\pgfbox[left,bottom]{TeX [Knuth, 1978]}}
+      
+      \only<2-5,6-8>{
+        \pgfputat{\pgfxy(2.75, 4.25)}{\pgfbox[left,bottom]{DVI [Fuchs, 1979]}}
+        \pgfputat{\pgfxy(2.3, 2.8)}{\pgfbox[center, bottom]{tex}}
+      }
+      \only<5-8>{
+        \pgfputat{\pgfxy(6.5, 4.25)}{\pgfbox[left,bottom]{PostScript [Adobe, 1982]}}
+      }
+      \only<6-8>{
+        \pgfxyline(5.1, 2.75)(6.9, 2.75)
+        \pgfputat{\pgfxy(5.5, 2.8)}{\pgfbox[left,bottom]{dvips}}
+      }
+      \only<7,8>{
+        \pgfxyline(8.5, 2)(8.5, 1.4)
+      }
+
+    \end{pgfpicture}
+       
+  \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Typographic concepts}
+	
+	\begin{itemize}
+		\item<1-| uncover@1 > {\bfseries Unit of measure}: PostScript \alert{\bf point} $\equiv \frac{1}{72} in \cong 0.3528 mm$;
+		\item<2-| uncover@2> {\bfseries Glyph}: pictorial representation of typographical token;
+		\item<3-| uncover@3,4> {\bfseries Kerning}: Shifting between pair of consecutive glyphs.
+	\end{itemize}
+	
+	\vfill
+          \only<1>{
+	
+        \begin{tikzpicture}
+            % INCH
+            \def\width{4}
+            \def\scale{0.2}
+            \draw[-] (0in,0in) -- (0in,-\scale in);
+            \foreach \x in {0,...,3} {
+              \draw[-] (0in,0in) -- (\x in,0in);
+              \draw[-] (\x in,0in) -- (\x in,-\scale in);
+              \draw[-] (\x.5 in,0in) -- (\x.5 in,-\scale *0.5 in);
+              % 
+              \draw[-] (\x.25 in,0in) -- ( \x.25  in,-\scale *0.25 in);
+              \draw[-] (\x.75 in,0in) -- ( \x.75  in,-\scale *0.25 in);
+              
+            } % end of foreach x
+            \draw[-] (0in,0in) -- (\width in, 0in) node[right] {\width in};
+            \draw[-] (\width in,0in) -- (\width in,-\scale in);
+        \end{tikzpicture}
+        
+        \vspace{1cm}
+        
+        \begin{tikzpicture}
+            % POINT
+            \def\width{300}
+            \def\scale{15}
+            \draw[-] (0 pt,0 pt) -- (0 pt,-\scale pt);
+            \foreach \x in {0, 1, 2} {
+              \draw[-] (0 pt,0 pt) -- (\x00 pt, 0 pt);
+              \draw[-] (\x00 pt, 0pt) -- (\x00  pt, -\scale pt);
+              \draw[-] (\x50 pt, 0 pt) -- (\x50 pt, -\scale *0.5 pt);
+              % 
+              \draw[-] (\x25 pt, 0 pt) -- ( \x25 pt, -\scale *0.25 pt);
+              \draw[-] (\x75 pt, 0 pt) -- ( \x75 pt, -\scale *0.25 pt);
+              
+            } % end of foreach x
+            \draw[-] (0 pt, 0 pt) -- (\width pt, 0 pt) node[right] {\width pt};
+            \draw[-] (\width pt, 0 pt) -- (\width pt, -\scale pt);
+
+        \end{tikzpicture}
+
+        \vspace{1cm}
+
+        % CENTIMETER
+        \begin{tikzpicture}
+          \def\width{10}
+            \def\scale{0.5}
+            \draw[-] (0 cm,0 cm) -- (0 cm,-\scale cm);
+            \foreach \x in {0,...,9} {
+              \draw[-] (0 cm,0 cm) -- (\x cm, 0 cm);
+              \draw[-] (\x cm, 0cm) -- (\x  cm, -\scale cm);
+              \draw[-] (\x.5 cm, 0 cm) -- (\x.5 cm, -\scale *0.5 cm);
+              % 
+              %\draw[-] (\x25 cm, 0 cm) -- ( \x25 cm, -\scale *0.25 cm);
+  %            \draw[-] (\x75 cm, 0 cm) -- ( \x75 cm, -\scale *0.25 cm);
+              
+            } % end of foreach x
+            \draw[-] (0 cm, 0 cm) -- (\width cm, 0 cm) node[right] {\width cm};
+            \draw[-] (\width cm, 0 cm) -- (\width cm, -\scale cm);
+
+        \end{tikzpicture}
+        
+          } % end of only
+          
+        \begin{tikzpicture}%
+	  \only<2> {
+	    \pgfputat{\pgfxy(4, 0.5)}{\pgfbox[left,center]{\pgfuseimage{glyph}}}%
+	  }
+        \end{tikzpicture}%
+
+	
+	% positive kerning
+	\begin{tikzpicture}[scale=0.5]
+          \only<3>{
+	    \draw (0, 0) rectangle (4,4);
+	    \draw (5, -0.5) rectangle (9, 3.5);
+	    \draw[<->] (4, 1.5) -- (5, 1.5) node[above,midway] {+};
+	  } % end of only
+        \end{tikzpicture}
+
+	% negative kerning
+	\begin{tikzpicture}[scale=0.5]
+          \only<4>{
+	    \draw (0, -1) rectangle (4,3);
+	    \draw (3, -1.5) rectangle (8, 2.5);
+	    \filldraw[fill=green!20!white] (3, -1) rectangle (4, 2.5);
+	    \draw[<->] (3, 0.5) -- (4, 0.5) node[above,midway] {-};
+	  } % end of only
+	\end{tikzpicture}
+
+\end{frame}
+
+\subsection{Basics}
+
+\begin{frame}
+  \frametitle{Boxes}
+  \begin{columns}
+	\begin{column}{3cm}
+		\begin{tikzpicture}[scale=.6]
+			\def\width{5} % width of the rectangles
+			\def\height{8}
+			\def\depth{2}
+			\def\sp{.35} % space
+			\def\lsp{.275} % litle space
+			
+			\draw[<->] (\width + 2*\lsp + \sp, 0) -- (\width + 2*\lsp + \sp, \height) node[midway,fill=white] {height}; %  |^
+			\draw (0, 0) rectangle (\width, \height); %2nd rectangle
+			\filldraw [red] (0, 0) circle (2pt); % point
+			\draw[->] (-\height/2, 0) -- (0, 0)  node[midway,above] {Reference} node[midway,below] {point}; % Reference point ->
+			\draw[<->] (\width + 2*\lsp + \sp, -\depth) -- (  \width + 2*\lsp + \sp, 0) node[midway,fill=white] {depth} ; %  |^
+			\draw (0, 0) -- (\width, 0) node[midway, above] {Baseline};
+			\draw (0, -\depth) rectangle (\width, 0); %1st base rectangle
+			\draw[<->] (0, -\depth -\sp -\lsp) -- ( \width ,-\depth -\sp -\lsp) node[fill=white,midway] {width}; % <->
+                        \only<2>{
+                          % axis
+                          \draw[red, very thick, ->] (0, 0) -- (\width/2, 0);
+                          \draw[red,very thick, ->] (0, 0) -- (0, \height/2);
+                          \draw[red, very thick, ->] (0, 0) -- (0, -\depth/2);
+                          \filldraw [red] (0, 0) circle (4pt); % point
+                        }
+		\end{tikzpicture}
+	\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Boxes}
+  \framesubtitle{Examples}
+
+	\pgfputat{\pgfxy(0.5, 2)}{\pgfbox[left,center]{{\bf \alert{10 pt}} characters} }
+	\vspace{1cm}
+	\begin{tikzpicture}
+	  \only<1>{
+	    \pgfputat{\pgfxy(-1, -.9)}{\pgfbox[left,center]{\pgfuseimage{gletter}}}
+	  }
+	  \only<2->{
+	    \pgfputat{\pgfxy(-1, -.9)}{\pgfbox[left,center]{\pgfuseimage{gletterwhite}}}
+	  }
+	  \only<2>{
+	    \pgfputat{\pgfxy(3, -.6)}{\pgfbox[left,center]{\pgfuseimage{hletter}}}
+	  }
+	  \only<3>{
+	    \pgfputat{\pgfxy(3, -.6)}{\pgfbox[left,center]{\pgfuseimage{hletterwhite}}}
+	    \pgfputat{\pgfxy(7, 0)}{\pgfbox[left,center]{\pgfuseimage{parenthesis}}}
+	  }
+	\end{tikzpicture}
+\end{frame}
+
+% some definitions of measures applied to boxes
+% used in the ``glue'' examples
+%% box 1
+\pgfkeyssetvalue{/width/1}{5}
+\pgfkeyssetvalue{/depth/1}{5}
+\pgfkeyssetvalue{/height/1}{5}
+%% box 2
+\pgfkeyssetvalue{/width/2}{6}
+\pgfkeyssetvalue{/depth/2}{1}
+\pgfkeyssetvalue{/height/2}{1}
+%% box 3
+\pgfkeyssetvalue{/width/3}{3}
+\pgfkeyssetvalue{/depth/3}{1.5}
+\pgfkeyssetvalue{/height/3}{6}
+%% box 4
+\pgfkeyssetvalue{/width/4}{8}
+\pgfkeyssetvalue{/depth/4}{2}
+\pgfkeyssetvalue{/height/4}{3.5}
+% spaces
+\pgfkeyssetvalue{/space/1}{9} % first space
+\pgfkeyssetvalue{/space/2}{9} % second space
+\pgfkeyssetvalue{/space/3}{12} % third space
+\pgfkeyssetvalue{/space/4}{0} % there is nothing after box 4
+\newcounter{totalspace} % store toral space
+\setcounter{totalspace}{0}
+\foreach \i in {1,2,3,4} {
+  \addtocounter{totalspace}{\pgfkeysvalueof{/space/\i}}
+}
+\pgfkeyssetvalue{/total/space}{\arabic{totalspace}}
+% stretches
+\pgfkeyssetvalue{/stretch/1}{3} % first stretch
+\pgfkeyssetvalue{/stretch/2}{6} % second stretch
+\pgfkeyssetvalue{/stretch/3}{0} % third stretch
+\pgfkeyssetvalue{/stretch/4}{0} % DONT
+\newcounter{totalstretch} % store total stretch
+\setcounter{totalstretch}{0}
+\foreach \i in {1,2,3,4} {
+  \addtocounter{totalstretch}{\pgfkeysvalueof{/stretch/\i}}
+}
+\pgfkeyssetvalue{/total/stretch}{\arabic{totalstretch}}
+% shrinks
+\pgfkeyssetvalue{/shrink/1}{1} % first shrinks
+\pgfkeyssetvalue{/shrink/2}{2} % second shrinks
+\pgfkeyssetvalue{/shrink/3}{0} % third shrinks
+\pgfkeyssetvalue{/shrink/4}{0} % DONT
+\newcounter{totalshrink} % store total shrink
+\setcounter{totalshrink}{3} % kick the boot
+\pgfkeyssetvalue{/total/shrink}{\arabic{totalshrink}}
+
+% define original baseline reset for the spaces
+\pgfkeyssetvalue{/xbaseline/1}{0}
+\pgfkeyssetvalue{/xbaseline/2}{14}
+\pgfkeyssetvalue{/xbaseline/3}{29}
+\pgfkeyssetvalue{/xbaseline/4}{44}
+
+% counters
+\newcounter{next}% to go one step further
+\newcounter{totalwidth} % to count total width
+\newcounter{totaladjust} % sumation of adjusts
+ \newcounter{xbase} % x base to start boxes
+
+\def\BOXES{
+  % reset baseline
+  % 4 BOXES
+  \foreach \i in {1, 2, 3, 4} { 
+    \foreach \x/\y/\X/\Y/\width in {
+      \pgfkeysvalueof{/xbaseline/\i}/
+      -\pgfkeysvalueof{/depth/\i}/
+      \pgfkeysvalueof{/xbaseline/\i}+\pgfkeysvalueof{/width/\i}/
+      \pgfkeysvalueof{/height/\i}/
+      \pgfkeysvalueof{/width/\i}} {
+      % {
+      \draw (\x,\y) rectangle (\X,\Y) node[above] {width \width};
+      \draw (\x, 0) -- (\X, 0); % baselines
+    }
+  }        
+  %% spaces and text
+  \setcounter{totalwidth}{0}
+  \setcounter{next}{1}
+  \foreach \idx in {1,2,3} {
+    \addtocounter{next}{1}
+    \foreach \x/\y/\X/\Y/\sp/\st/\sh in {
+      \pgfkeysvalueof{/width/\idx}/%
+      0/%
+      \pgfkeysvalueof{/xbaseline/\arabic{next}}/%
+      0/%
+      \pgfkeysvalueof{/space/\idx}/%
+      \pgfkeysvalueof{/stretch/\idx}/%
+      \pgfkeysvalueof{/shrink/\idx}} {
+      %{
+      \draw[dashed] (\pgfkeysvalueof{/xbaseline/\idx} +\x, \y) -- (\X, \Y);
+      \draw (\pgfkeysvalueof{/xbaseline/\idx} + \x+\sp/2,\y-.1) node[below] {space \sp};
+      \draw (\pgfkeysvalueof{/xbaseline/\idx} + \x+\sp/2,\y-2.1) node[below] {stretch \st};
+      \draw (\pgfkeysvalueof{/xbaseline/\idx} + \x+\sp/2,\y-4) node[below] {shrink \sh};
+      \draw[<->] (0,-9) -- (52, -9) node[fill=white,midway] {width 52};
+    } % end of inner foreach
+  } % end of outer foreach
+}
+
+\def\ADJUSTEDLISTOFBOXES #1 #2 { %
+  \setcounter{xbase}{0}%
+  \setcounter{totalwidth}{0}%
+  % rectangles
+  \foreach \i in {1,2,3,4} {%
+    % {
+    % FOREACH
+    \foreach \x/\y/\X/\Y/\width/\sp/\st/\sh/\adj in {
+      %{
+      \arabic{xbase}/
+      -\pgfkeysvalueof{/depth/\i}/
+      \arabic{xbase}+\pgfkeysvalueof{/width/\i}/
+      \pgfkeysvalueof{/height/\i}/
+      \pgfkeysvalueof{/width/\i}/
+      \pgfkeysvalueof{/space/\i}/
+      \pgfkeysvalueof{/stretch/\i}/
+      \pgfkeysvalueof{/shrink/\i}/
+      \pgfkeysvalueof{/adjust/\i}} {
+        % {
+        \draw (\x,\y) rectangle (\X,\Y); % box
+        \draw (\x, 0) -- (\X, 0); % baseline
+        \fill [color=red]  (\x, 0) circle (2pt); % point
+        \draw[dashed] (\X, 0) -- (\X + \sp + \adj, 0);
+        \draw[dashed] (\x, 0) -- (\X, 0);
+        
+        % defines the signal of the adjust
+        \ifnum#2=51\def\signal{-1}\def\action{\sh}\else\def\signal{+6}\def\action{\st}\fi
+        {
+          \ifnum\i<4 % after 4 do not have space
+          \draw (\x+ + \width + \sp/2, -5.1) node[below] {\tiny $\sp +(\signal/\pgfkeysvalueof{/total/#1})x\action=$}
+          (\x + \width + \sp/2, -9.1) node[below] {\small $\sp \adj$};
+          \fi
+        }
+      } % END of FOREACH \x...
+      \addtocounter{xbase}{\pgfkeysvalueof{/width/\i}} % add width
+      \addtocounter{xbase}{\pgfkeysvalueof{/space/\i}} % add old xbase value
+      \addtocounter{xbase}{\pgfkeysvalueof{/adjust/\i}} % add old xbase value
+
+    } % END of FOREACH{1,2,3,4}
+  \draw[<->] (0,-13) -- (#2, -13) node[fill=white,midway] {width #2};
+} % END of def\ADJUSTED...
+
+\def\pleasetex#1{
+  \draw (0,15) node[right] {``\TeX! Please, make the horizontal list into a box that is {\color{darkred}#1 units wide}''};
+  \draw[<->,color=red] (0,-13) -- (#1, -13) node[fill=white,midway] {width #1};
+}
+   
+\begin{frame}
+  \frametitle{Glue}
+  \framesubtitle{Stretchability example}
+  \begin{tikzpicture}[scale=.2]
+   
+    \BOXES
+
+    \addtocounter{totalwidth}{\pgfkeysvalueof{/width/4}} % add box 4 width
+
+    \only<2>{
+     \pleasetex{58}
+    }
+  \end{tikzpicture}
+\end{frame}
+
+
+%%%%%%%%%%%%%% 58 units slide
+%%% TeX obey the ask to make horizontal box of 58 units
+
+\begin{frame}
+
+  \frametitle{Glue}
+  \framesubtitle{Stretchability example}
+  \begin{tikzpicture}[scale=.2]
+
+    %% adjust to do
+    \pgfkeyssetvalue{/adjust/1}{+2}
+    \pgfkeyssetvalue{/adjust/2}{+4}
+    \pgfkeyssetvalue{/adjust/3}{+0}
+    \pgfkeyssetvalue{/adjust/4}{+0} % there is no adjust after 4
+    \ADJUSTEDLISTOFBOXES stretch  58
+  \end{tikzpicture}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%% SHRINK
+\begin{frame}
+  \frametitle{Glue}
+  \framesubtitle{Shrinkability example}
+  \begin{tikzpicture}[scale=.2]
+
+    \BOXES
+   
+    \only<2> {
+      \pleasetex{51}
+    }
+  \end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Glue}
+  \framesubtitle{Shrinkability example}
+
+  \begin{tikzpicture}[scale=.2]
+    %% adjust to do
+    \pgfkeyssetvalue{/adjust/1}{-0.33}
+    \pgfkeyssetvalue{/adjust/2}{-0.66}
+    \pgfkeyssetvalue{/adjust/3}{-0}
+    \pgfkeyssetvalue{/adjust/4}{-0} % there is no adjust after 4
+    \setcounter{totaladjust}{0}
+    \foreach \i in {1,2,3,4} {
+      \addtocounter{totaladjust}{\pgfkeysvalueof{/adjust/\i}{0}}
+    }
+    
+    \ADJUSTEDLISTOFBOXES shrink 51
+  \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Vertical boxes}
+	
+	\def\scalevalue{0.35}
+	\begin{tikzpicture}[scale=\scalevalue]
+		
+		\invisible<7->{
+			\draw (0, -1.5) rectangle (4, 5);
+		}
+		\only<7->{
+			\draw (0, -1.5) rectangle (4, 8);
+			\draw[<->,color=red!70!black] (-1, 0) -- (-1, 8) node[midway,left] {8pt};
+			\invisible<8>{
+				\draw[<->,color=red!40!black] (-1, 10) -- (-1, 11) node[midway,left] {\tiny 1pt};
+			}
+		}
+		\draw[dashed] (-4, 0) -- (7, 0);
+		
+		\only<1-4>{
+			\draw (0, 11) rectangle (5, 18);
+			\draw[dashed] (-4,  14) -- (7, 14);
+		}
+		
+		\only<5-7>{
+			\draw (0, 13) rectangle (5, 20);
+			\draw[dashed] (-4,  16) -- (7, 16);
+		}
+		
+		\only<2->{
+			\invisible<5->{
+				\draw[<->] (6,  0) -- (6 , 14);
+			}
+		}
+		
+		\only<2>{
+			 \pgfputat{\pgfxy(7*\scalevalue, 7*\scalevalue)}
+				{\pgfbox[left, center]{\tt \small \bs baselineskip=$\langle$glue$\rangle$}}
+			\pgfputat{\pgfxy(7*\scalevalue,  5.75*\scalevalue)}
+				{\pgfbox[left, center]{\tt \small \bs lineskip=$\langle$glue$\rangle$}}
+			\pgfputat{\pgfxy(7*\scalevalue, 4.5*\scalevalue)}
+				{\pgfbox[left, center]{\tt \small \bs lineskiplimit=$\langle$dimen$\rangle$}}
+		}
+		
+		\only<3->{
+			 \pgfputat{\pgfxy(7*\scalevalue, 7*\scalevalue)}
+				{\pgfbox[left, center]{\tt \small \alert<4-6>{\bs baselineskip=12pt plus 2pt}}}
+			\pgfputat{\pgfxy(7*\scalevalue,  5.75*\scalevalue)}
+				{\pgfbox[left, center]{\tt \small \alert<8>{\bs lineskip=3pt minus 1pt}}}
+			\pgfputat{\pgfxy(7*\scalevalue, 4.5*\scalevalue)}
+				{\pgfbox[left, center]{\tt \small \alert<7>{\bs lineskiplimit=2pt}}}
+		}
+		
+		\only<3->{	
+			\invisible<7->{
+				\draw[<->] (-1, 0) -- (-1, 5) node[midway,left] {\small 5pt};
+			}
+			\invisible<5->{
+				\draw[<->] (-1, 11) -- (-1, 14) node[midway,left] {\small 3pt};
+			}
+		}
+		\only<4,5>{
+			\draw[<->,color=red] (-1,  5) -- (-1, 11) node[midway,left] {\small 4pt};
+		}
+		
+		\only<5-7>{
+			\draw[<->] (6,  0) -- (6 , 16);
+			\draw[<->] (-1, 13) -- (-1, 16) node[midway,left] {\small 3pt};
+		}
+		\only<6>{
+			\draw[<->,color=red] (-1,  5) -- (-1, 13) node[midway,left] {\small 4pt + 2pt = 6pt};
+		}
+		
+		\only<8>{
+			\draw[<->,color=red] (-1,  8) -- (-1, 10) node[midway,left] {\tiny 3pt - 1pt = 2pt};
+			\draw (0, 10) rectangle (5, 17);
+			\draw[dashed] (-4,  13) -- (7, 13);
+			\draw[<->] (6,  0) -- (6 , 13);
+			\draw[<->] (-1, 10) -- (-1, 13) node[midway,left] {\small 3pt};
+		}
+	\end{tikzpicture}
+	
+\end{frame}
+
+\subsection{Running \TeX}
+
+\begin{frame}
+	\frametitle{Running \TeX (1)}
+	\framesubtitle{Setting horizontal size}
+
+        \begin{tikzpicture}
+          \draw (0, 0) node[fill=black,text width=10cm,text justified]{
+            \tt \small
+            \color{white}
+            \$ tex \\
+            \$ **\bs relax \\
+          \$ *\bs input story \\
+          \$ *\bs hsize=3in \bs input story \\
+          \$ *\bs hsize=2.5in \bs input story \\
+          \$ *\bs hsize=2in \bs input story \\
+          \$ *\bs end \\
+          \$ xdvi texput.dvi 
+      };
+        \end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Running \TeX (2)}
+  \framesubtitle{Setting tolerance}
+
+  \begin{tikzpicture}
+    \draw (0, 0) node[fill=black,text width=10cm,text justified]{
+      \tt \small
+      \color{white}
+      \$ tex \\
+      \$ **\bs relax \\
+      \$ *\bs input story \\
+      \$ *\bs hsize=2in \bs tolerance=1600 \bs input story \\
+      \$ *\bs hsize=1.5in \bs input story \\
+      \$ *\bs tolerance=10000 \bs input story  \\
+      \$ *\bs hsize=.75in \bs input story \\
+      \$ *\bs end \\
+      \$ xdvi texput.dvi 
+    };
+  \end{tikzpicture}
+	
+\end{frame}
+
+\subsection{Ho\texorpdfstring{$\omega$}{w} \texorpdfstring{$\alpha$}{a}bout M\texorpdfstring{$\alpha$}{a}th?}
+
+\begin{frame}
+    \frametitle{\$M$\alpha$th symbols\$}
+  
+    \begin{columns}
+
+    \begin{column}{4cm}      
+    \begin{block}{greek letters}
+        \begin{tabbing}
+            {\em Input} \hspace{1.8cm} \= {\em Output} \\
+            \$\bs alpha\$ \> $\alpha$ \\
+            \$\bs gamma\$ \> $\gamma$ \\
+            \$\bs Gamma\$ \> $\Gamma$ \\
+            \$\bs Psi\$ \> $\Psi$ \\
+            \$\bs Omega\$ \> $\Omega$ \\
+    \end{tabbing}
+    \end{block}
+    \end{column}
+
+    \only<2>{
+      \begin{column}{4cm}      
+        \begin{block}{operators}
+          \begin{tabbing}
+            {\em Input} \hspace{1.8cm} \= {\em Output} \\
+            \$\bs sum\$ \> $\sum$ \\
+            \$\bs prod\$ \> $\prod$ \\
+            \$\bs int\$ \> $\int$ \\
+            \$\bs cap\$ \> $\cap$ \\
+            \$\bs vee or \bs lor\$ \> $\vee$ \\
+          \end{tabbing}
+        \end{block}
+      \end{column}
+    }
+    
+    \end{columns}
+
+\end{frame}
+
+\def\metahat{$\hat{\ }$}
+\begin{frame}
+	\frametitle{\$M$\alpha$th formul$\alpha$s\$}
+	
+	\begin{columns}
+	
+	\begin{column}{4cm}
+	\begin{tabbing}
+		{\em Input} \hspace{2.5cm} \= {\em Output} \\
+		{\tt \$x\metahat 2\$} \> $x^2$\\
+		{\tt \$x\_2\$} \> $x_2$\\
+		{\tt \$2\metahat x\$} \> $2^x$\\
+		{\tt \$x\metahat 2y\metahat 2\$} \> $x^2y^2$ \\
+		{\tt \$x \metahat  2y \metahat  2\$} \> $x ^ 2y ^ 2$ \\
+		{\tt \$x\_2y\_2\$} \> $x_2y_2$ \\
+		{\tt \$\_2F\_3\$} \> $_2F_3$ \\
+	\end{tabbing}
+	\end{column}
+	
+        \begin{column}{4cm}
+            \begin{tabbing}
+		{\em Input} \hspace{2.3cm} \= {\em Output} \\
+                {\tt \$x\metahat \{2y\}\$} \> $x^{2y}$ \\
+                {\tt \$2\metahat \{2\metahat x\}\$} \> $2^{2^x}$ \\
+                {\tt \$2$\hat{\ }\{$2\metahat \{2\metahat x\}\}\$} \> $2^{2^{2^x}}$ \\
+                {\tt \$y\_\{x\_2\}\$} \> $y_{x_2}$ \\
+                {\tt \$y\_\{x\metahat 2\}\$} \> $y_{x^2}$ \\
+            \end{tabbing}        
+        \end{column}
+        
+    \end{columns}	
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{$+$ \only<2>{$+$} \$\$ M$\alpha$th \$\$}
+    
+    \only<1>{
+{\small   \$\$ \bs sqrt\{1+ \bs sqrt\{1+\bs sqrt\{1+\bs sqrt\{1+\bs sqrt\{1+x\}\}\}\}\} \bs eqno(1) \$\$    }
+    $$ \sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+x}}}}} \eqno(1) $$ 
+    }
+
+    \only<2>{
+        $$a_0+{1\over\displaystyle a_1+
+            { 1\over\displaystyle a_2+
+                { 1\over\displaystyle a_3+
+                     { 1\over a_4}}}} \eqno(2)$$
+     }
+\end{frame}
+
+\section{\LaTeX}
+
+\subsection{Introduction}
+
+\begin{frame}
+  \frametitle{\LaTeX -- Document preparation system}
+  \framesubtitle{The father}
+  
+  \begin{columns}
+    
+    \begin{column}{2.5cm}
+      \pgfuseimage{lamport}
+    \end{column}
+    
+    \begin{column}{6.5cm}
+      \begin{block}{Leslie Lamport}
+        \begin{itemize}
+          \item Mathematician and Programmer
+        \item Microsoft Research
+        \end{itemize}
+      \end{block}
+
+      \begin{alertblock}{Motivation}
+        \begin{itemize}
+          \item Unsatisfaction with \TeX 80  macros writen by Max Diaz when he was writing a book
+        \end{itemize}
+      \end{alertblock}
+    \end{column}
+    
+  \end{columns}
+\end{frame}
+
+\subsection{Basics}
+
+\begin{frame}
+  \frametitle{\LaTeX{} Macro}
+  \framesubtitle{Example}
+
+  \begin{block}{Macro}
+    \bs documentclass[\alert<3>{a4paper}, \alert<4>{12pt}]\{\alert<2>{article}\}
+  \end{block}
+  
+  \only<2>{
+    \begin{alertblock}{Expansion:  $<$load file$>$}
+      /usr/share/texmf-texlive/tex/latex/base/article.cls
+    \end{alertblock}
+  }
+
+  \only<3>{
+    \begin{alertblock}{Expansion: $<$set document size to A4 paper$>$}
+      \bs DeclareOption\{a4paper\}\\
+      \hspace{1cm} \{\bs setlength\bs paperheight \{297mm\}\% \\
+      \hspace{1cm}  \bs setlength\bs paperwidth  \{210mm\}\}
+    \end{alertblock}
+  }
+  \only<4>{
+    \begin{alertblock}{Expansion: $<$set glyph to 12 point$>$}
+        \bs DeclareOption\{12pt\}\{\bs renewcommand\bs @ptsize\{2\}\}
+    \end{alertblock}
+  }
+
+\end{frame}
+
+\subsection{Common Structure}
+
+% create a grey scale to shadow some parts of text
+\def\mygrey{black!10!bg}
+\def\ntext{text text text}
+
+\begin{frame}
+  \frametitle{\LaTeX document: basic structure}
+  \begin{tikzpicture}
+    \draw (0,0) node [rectangle, %
+      very thick,  %
+      minimum size = 3mm,
+      draw=black, 
+      text width=10cm]{ 
+      \bs documentclass[a4paper, 12pt]\{article\} \\
+      { \color<1,6>{\mygrey} \alert<2>{\% preamble} } \\
+      { \color<1>{\mygrey}  \alert<2>{\bs usepackage[parameter]\{package\}} } \\
+      {  \color<1-2>{\mygrey}  \alert<3>{\bs begin\{document\}}  }\\
+      { 
+        \color<1-3>{\mygrey}
+        \alert<4>{
+        \hspace{0.25cm}\bs section\{First section name\} \\
+        \hspace{0.5cm} \ntext \\
+        } % end of alert
+      } % end of color
+      {
+        \color<1-4>{\mygrey}
+        \alert<5>{
+          \small
+          \hspace{0.75cm} \bs {subsection\{Second section name\}} \\
+          \hspace{1.25cm}{\ntext} \\
+          } % end of alert
+        } % end of color
+      {
+        \color<1-5>{\mygrey}
+        \alert<6>{
+          \footnotesize
+          \hspace{1.75cm} \bs {subsubsection\{Third section name\}} \\
+          \hspace{2.25cm}{\ntext} \\
+          } % end of alert
+      }  % end of color
+      { \color<1,2>{\mygrey}  \alert<3>{\bs end\{document\}}  }
+};
+\end{tikzpicture}
+\end{frame}
+
+\subsection{\sc{BIB}\TeX}
+
+\def\spc{\hspace{2cm}}
+
+\def\author{Leslie Lamport}
+\def\title{LaTeX: A Document Preparation System}
+\def\pub{Addison-Wesley}
+\def\pyear{1986}
+\def\producingtext{Producing Greek letters is as easy as}
+\def\bibtexentry{
+\small
+@BOOK\{\alert<2-4>{latexbook}, \\
+\hspace{2cm} AUTHOR = "\author", \\
+\spc TITLE = "\title", \\
+\spc  PUBLISHER = "\pub", \\
+\spc  YEAR = \pyear \\
+\}
+}
+
+\begin{frame}
+  \frametitle{Bibliographic database}
+
+  \begin{tikzpicture}
+    \only<1-4>{
+      \draw (0,0) node[fill=red,text width=10cm,text centered]
+            {filename.bib};
+  
+            \draw  (0, -1.75) node[rectangle,
+              draw=black,
+              text width=10cm,
+              text justified] {
+              \bibtexentry
+            };
+    } % end of only
+    \only<2-4>{
+      \draw (0, -3.75) node[fill=blue!20!bg,text width=10cm,text centered]{filename.tex};
+      \draw  (0, -4.325) node[rectangle,
+        draw=black,
+        text width=10cm,
+        text justified] {
+        \producingtext \$\bs pi\$\ \alert{$\tilde{ }$\ \bs cite\{latexbook\}}.
+      };
+    } % end of \only<2->
+
+    \only<3,4>{
+      \draw (0, -5.75) node[fill=black,text width=10cm,text justified]{
+        \tt \small
+        \color{white}
+        \$ echo ``run bibtex and latex 2 times''\\
+        \$ bibtex filename 
+        \only<4> {
+          \\
+          \$ latex filename \\
+          \$ latex filename
+        }
+      };
+    }
+    \only<5>{
+      \draw  (0, 0) node[rectangle,
+        draw=black!30!bg,
+        text width=10cm,
+        text justified] {
+        \color{black!30!bg}{
+          \bibtexentry
+        } % end of draw
+       };
+
+      \draw (0, -2.25) node[fill=green!20!bg,text width=10cm,text centered]{manuscript}; % end of draw
+      \draw  (0, -4) node[rectangle,
+        draw=green!10!bg,
+        text width=10cm,
+        text justified] {
+        \producingtext{} $\pi$ [1]. \\
+        
+        {\noindent \bf References} \\
+        
+        [1] \author. {\em \title}. \pub, \pyear.
+      };
+    } % end of \only<5>
+    
+  \end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{``Three \LaTeX mistakes that people should stop  making?''}
+
+  \begin{enumerate}
+    
+  \item \only<3>{``} Worrying too much about formatting and not
+    enough about content;
+    \only<2-> {
+  \item Worrying too much about formatting and not
+    enough about content;
+    }
+    \only<3> {
+    \item Worrying too much about formatting and not
+      enough about content.'' (Leslie Lamport)
+    }
+  \end{enumerate}
+
+\end{frame}
+
+\section{Further Details}
+
+\begin{frame}
+  \frametitle{\TeX 's children}
+    \begin{list}
+      {\color{blue!90!bg}{$\star$}}{\setlength{\parsep}{.5cm}}
+      
+    \item \href{ http://wiki.contextgarden.net/Main_Page}{C\sc{O}n\TeX t};
+      \pause
+    \item \href{http://www.pdftex.org/}{pdf\TeX}, pdf\LaTeX;
+      \pause
+    \item \href{http://omega.enstb.org/}{$\Omega$};
+      \pause
+        \item \href{http://scripts.sil.org/xetex}{X{\small \sc{E}}\TeX};
+          \pause
+          \item\href{http://www.luatex.org}{Lua\TeX}.
+  \end{list}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{References}
+
+  \begin{thebibliography}{Haralambous, 2007}
+  \bibitem[Knuth, 1991]{texbookcite}
+    Donald Erwin Knuth
+    \newblock {\em The \TeX book}.
+    \newblock Addison-Wesley, 20th printing, 1991.
+
+  \bibitem[Haralambous, 2007]{fontsencbookcite}
+    Yannis Haralambous
+    \newblock {\em Fonts \& encodings}
+    \newblock O'Reilly Media, 1st edition, 2007.
+
+  \bibitem[Lamport, 1994]{latexbookcite}
+    Leslie Lamport
+    \newblock {\em LaTeX: A Document Preparation System}
+    \newblock Addison-Wesley, 2nd edition, 1994.
+
+  \end{thebibliography}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Very useful URLs}
+  
+  \begin{list}
+    {\color{darkblue}{$\bullet$}}{\setlength{\parsep}{.8cm}}
+
+    \item \url{http://www.ctan.org}{ -- Comprehensive TeX Archive
+      Network ( CTAN)};
+
+    \item \url{http://www-cs-faculty.stanford.edu/~knuth/}{ -- Donald Knuth homepage};
+
+      \item \url{http://www.lamport.org}{ -- Leslie Lamport homepage}.
+
+  \end{list}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Where to find me?}
+  \url{http://adrianoholanda.org}
+\end{frame}
+
+\end{document}
+    

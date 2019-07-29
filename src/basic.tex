@@ -1,0 +1,42 @@
+\documentclass[a4paper, 12pt]{book}
+
+\usepackage{makeidx} 
+
+% some definitions
+\def\buda{Buddha}
+\def\davinci{Leonard da Vinci}
+\def\antoine{Antoine de Saint-Exupery}
+
+% do an index
+\makeindex
+
+\begin{document}
+
+% \tableofcontents
+
+\chapter{The beginning}
+
+\section{Intro}
+
+\buda\index{\buda} said once ``there are two mistakes one can make
+along the road to truth...not going all the way, and not starting''.
+
+\section{Outro}
+
+\davinci\index{\davinci} said once ``All our knowledge has its origins in our
+perceptions.''
+
+\chapter{Fade out}
+
+\section{The beginning of the end}
+
+According to \antoine\index{\antoine}: ``Night, the beloved. Night,
+when words fade and things come alive. When the destructive analysis
+of day is done, and all that is truly important becomes whole and
+sound again. When man reassembles his fragmentary self and grows with
+the calm of a tree.''
+
+% run makeindex basic.idx
+\printindex
+
+\end{document}

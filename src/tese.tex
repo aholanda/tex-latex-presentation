@@ -1,0 +1,104 @@
+\documentclass[a4paper, 12pt, ruledheader,pnumplain,normalfigtabnum]{abnt}
+
+%% pacotes para portugues
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+
+% algumas definicoes
+\def\etal{{\em at al.}}
+
+\begin{document}
+
+% CAPA 
+
+\autor{José da Silva} 
+\titulo{Proposta de uma Arquitetura
+Interoperável para um Sistema de Informação em Saúde} 
+\orientador{João  Souza} 
+\instituicao{Universidade de São Pedro} \data{\today}
+\local{Ribeirão Preto} 
+
+\capa 
+
+\folhaderosto
+
+% estilo da pagina
+\pagestyle{headings}
+
+% inicializa contador de paginas
+\setcounter{page}{1}
+
+\sumario
+
+\begin{resumo}
+  Os problemas de interoperabilidade podem ser técnicos, onde os
+  componentes de computação dos sistemas não permitem a cooperação
+  devido às diferenças nos protocolos de comunicação ou semânticos,
+  ocasionados devido à diversidade de representação da informação
+  transmitida. Este trabalho propõe uma arquitetura para facilitar
+  ambos os aspectos de interoperabilidade, sendo que a
+  interoperabilidade técnica é proporcionada pela utilização de um
+  {\em middleware} e a semântica, pela utilização de sistemas de
+  terminologia adotados internacionalmente.
+\end{resumo}
+
+\clearpage
+
+% paginas textuais c/ numeracao em arabico
+\pagestyle{ruledheader}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\chapter{Introdução}
+\label{introducao}
+
+Este Capítulo descreve a motivação para a pesquisa em padronização de
+sistemas de informação em saúde . A Seção \ref{intro:interoperability}
+descreve a importância da interoperabilidade entre os agentes de
+saúde.  
+
+\section{Interoperabilidade}
+% referencia cruzada
+\label{intro:interoperability}
+
+Até o momento, nenhum sistema computadorizado de informação em saúde é
+capaz de dar suporte a todo o espectro de conhecimento médico.
+Conseqüentemente, hospitais e instituições de saúde adquirem sistemas
+de diferentes fornecedores para satisfazer as suas necessidades
+específicas. Como a troca de informações entre diferentes sistemas
+geralmente não é trivial, esta prática acaba criando ``ilhas de
+informação'' dentro das próprias instituições.  Considerando, por
+exemplo, que um sistema computadorizado de registros clínicos deve
+trabalhar com um sistema especialista de diagnóstico para melhorar o
+atendimento ao paciente, para atingir integração ótima entre os dois
+sistemas, a transferência dos registros de pacientes para o sistema
+especialista deve ser automatizada. Na tentativa de atingir tal
+objetivo, as diferenças entre os vocabulários controlados dos dois
+sistemas foi citada por Wong \etal~\cite{wong:cbr:1994} como o maior
+obstáculo para o intercâmbio de informações, mesmo se ambos os
+sistemas tivessem sido implementados pelos mesmos desenvolvedores.
+
+Um sistema computacional de arquitetura aberta em que houvesse a
+possibilidade de se acoplar componentes de software que pudessem
+colaborar na troca de informação com outros sistemas é o passo inicial
+para ampliar o nível de acesso às informações do paciente. Porém, como
+atualmente a informação médica trocada é fortemente baseada em
+linguagem natural, há a necessidade de conformação dos termos usados a
+algum vocabulário controlado para a representação dos conceitos. Com a
+adoção destes procedimentos, há início da facilitação da troca de
+informações entre sistemas heterogêneos criando assim condições para
+alcançar a interoperabilidade.
+
+A sintaxe e a semântica da troca de informações médicas utilizando uma
+ linguagem específica para este fim podem ser padronizadas
+utilizando um sistema de terminologia.  Os sistemas de terminologia
+ajudam a lidar com a enorme variabilidade das expressões e termos
+médicos, reduzindo a ambigüidade e relacionando os termos sinônimos.
+Com a utilização destes sistemas, os termos médicos podem ser
+representados por códigos que são independentes da linguagem natural.
+
+\bibliographystyle{abnt-alf}
+%\bibliographystyle{abnt-num}
+\bibliography{myrefs}
+
+\end{document}

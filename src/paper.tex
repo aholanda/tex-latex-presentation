@@ -1,0 +1,27 @@
+\documentclass[a4paper, 10pt]{article}
+
+\begin{document}
+
+\author{Don Lamp}
+\title{How to add math formulas using \LaTeX }
+\date{\today}
+\maketitle
+
+\begin{abstract}
+  All math formulas can be easily encapsulated in an environment to be
+  manipulated.
+\end{abstract}
+
+\section{Type manuscripts with formulas is easy}
+
+The {\tt math} mode can be invoked using {\tt
+  $\backslash(\ldots\backslash)$} or \$$\ldots$\$ and the construction
+{\tt $\backslash$begin \ldots$\backslash$end} with {\tt displaymath}
+environment as parameter or simply {\tt
+  $\backslash$[\ldots$\backslash$]} that acts as full-fledged
+environment~\cite{latexbook}.
+
+\bibliographystyle{plain}	% (uses file "plain.bst")
+\bibliography{myrefs}		% expects file "myrefs.bib"
+
+\end{document}

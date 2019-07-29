@@ -1,0 +1,124 @@
+
+* (La)\TeX
+
+  \def\ps{postscript}
+
+** \TeX :tex:
+
+\section{Introduction}
+According to [[http://tug.ctan.org/what_is_tex.html][\TeX history writen at CPAN]], the \TeX project started at
+1978 when Donald Knuth was revising the 2nd vol of TAOCP. He was very
+disappointed due to the poor quality of new typesetting system used by
+the publisher.
+
+Knuth made great contributions in the fields of {\bf analysis of
+algorithms}, combinatorics, compiler techniques, string matching and
+other related fields in computer science and maths. He declared that
+the main achievement was the spread of {\bf asymptotic notation} use
+to the analysis of complexity of algorithms.
+
+He reasoned that as a computer scientist, he could do the job of
+produce a software that could typeset 0s and 1s (ink and no ink). He
+estimated that he would spend {\bf 6 months} but he spent about {\bf
+10 years}.
+
+He wanted to develop something that could resist to time and switches
+in printer technology. The strategy was not only create a typesetting
+language and a font maker but also the format of the file produced by
+\TeX. In {\bf 1979}, {\bf David Fuchs} joins the group and developed the
+device independent format (DVI). DVI is a binary format used to a
+second program to convert to a graphical data more appropriate to a
+printer.
+
+The graphical format and printer language was standardized when in
+{\bf 1982}, {\bf Jonh Warnock} and {\bf Charles Geschke}, the Adobe's
+founders, developed the postscript (PS) dynamically programming
+language. PS is a language optmized for printing text and graphics
+based on Mathematical objects and using Polish notation.
+
+*** Typographical concepts
+
+**** Unit of measure
+     The unit of mesure used in the typographical elements is the {\bf
+point} that is \frac{1/72} {\em in} or 0.3528 {\em mm}.
+
+**** Glyph
+     Glyph is the pictorial representation of typographical token,
+even though it will be mapped to some token, a priori it's only "an
+inch in the paper".
+
+**** Kerning 
+     Kerning is the shifting between a pair of glyphs. It could be
+negative cause one glyph could "allow" the approximantion of other to
+improve the aestetic view.
+
+*** Runing \TeX
+
+**** Seting horizontal size
+ $ tex
+ $ **\relax
+ $ *\input story
+ $ *\hsize=3in ninput story
+ $ *\hsize=2.5in ninput story
+ $ *\hsize=2in ninput story
+ $ *\end
+ $ xdvi texput.dvi
+
+**** Setting tolerance
+$ tex
+$ **\relax
+$ *\input story
+$ *\hsize=2in ntolerance=1600 ninput story
+$ *\hsize=1.5in ninput story
+$ *\tolerance=10000 ninput story
+$ *\hsize=.75in ninput story
+$ *\end
+$ xdvi texput.dvi
+
+*** Math
+    Math mode
+
+
+
+** \LaTeX :latex:
+***   Motivation :latex:motivation:
+      \LaTeX motivation, as said in the [[http://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-latex-interview.pdf][interview]], was the
+unsatisfaction with Max Dias' macros when \TeX 80 was created. He is
+starting to write a book and noticed that with ''litle extra effort''
+could do macros that could be used by other people.  Some important
+notes could be made from the interview. First, due to the decreasing
+of cost in preparing a scientific manuscripts, the editors started to
+refuse to accept eletronic documents since storage cost was
+prohibitive at that time, but the argument was that they could not
+force someone who does not have a computer to use one.  But Lamport,
+in the late of 80's, proposed to ACM that they should create standard
+document styles or macro packages to 3 major formats, \Tex/\LaTeX,
+troff and Scribe.  In this paper, he said also that Knuth predicted
+that \TeX would long 100 years.  Some mistakes about \LaTeX design was
+pointed, like the choice of \small, \large and etc instead of
+\size{n}. But he defends the choice of \subsubsection instead of \sss
+or \section{3} or .NH3 (the troff way) since this could lead to beasts
+like \sssssss, \section{3333} or .NH3333.  He also made a self-critics
+cause he did not participate of \TeX redesign that could lead to a
+better solution to substitute macro expansion.  Finally, when asked
+about 3 mistakes that people should stop making when using \Tex, he
+said:
+
+*** \LaTeX macros
+    very technical stuff, only show to developers.
+
+*** Basic structure of documents
+    Show the very basic structute of a \LaTeX document with
+documentclass, preamble, begin and end document, section, subsection
+and subsubsection.
+
+***    Bibliographic database: BIBTeX
+
+
+*** Common mistakes
+\begin{enumerate}
+\item Worrying to much about formating and not enough about content;
+\item Worrying to much about formating and not enough about content;
+\item Worrying to much about formating and not enough about content.
+\end{enumerate}
+

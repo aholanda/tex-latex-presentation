@@ -1,0 +1,7 @@
+export TEXINPUTS=./iop:$TEXINPUTS
+
+rm -f iopaper.aux
+pdflatex iopaper
+bibtex iopaper
+pdflatex iopaper
+pdflatex iopaper
