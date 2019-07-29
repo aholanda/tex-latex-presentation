@@ -1,10 +1,6 @@
 # Generating the pdf file
 
-Download de source code
-
-```shell
-$ git clone git@git.uspdigital.usp.br:ajholanda/tex-latex-presentation.git
-```
+Clone the repository and
 
 Enter in the directory `tex-latex-presentation/`
 
