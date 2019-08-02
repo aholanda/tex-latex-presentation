@@ -14,7 +14,7 @@ and compile the presentation by running
 $ pdflatex slides.tex
 ```
 
-Open the file named `slides.pdf`.
+Open the file named [`slides.pdf`](https://speakerdeck.com/ajholanda/tex-and-latex).
 
 
 # Dependency
